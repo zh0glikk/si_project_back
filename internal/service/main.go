@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/si_project_back/internal/api"
+	"github.com/si_project_back/internal/bot"
 	"github.com/si_project_back/internal/config"
 )
 
@@ -26,6 +27,8 @@ func NewService(ctx context.Context, cfg config.Config) *service {
 
 func (s *service) Run() error {
 	r := api.Router(s.cfg)
+
+	go bot.RunBot(s.cfg)
 
 	err := http.Serve(s.cfg.Listener(), r)
 	if err != nil {

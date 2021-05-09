@@ -1,6 +1,5 @@
 package cli
 
-
 import (
 	"context"
 	"github.com/urfave/cli"
@@ -37,25 +36,6 @@ func Run(args []string) bool {
 	}
 
 	app.Commands = cli.Commands{
-		{
-			Name: "migrate",
-			Subcommands: cli.Commands{
-				{
-					Name:   "up",
-					Before: before,
-					Action: func(ctx *cli.Context) error {
-						return MigrateUp(cfg)
-					},
-				},
-				{
-					Name:   "down",
-					Before: before,
-					Action: func(ctx *cli.Context) error {
-						return MigrateDown(cfg)
-					},
-				},
-			},
-		},
 		{
 			Name:   "run",
 			Before: before,

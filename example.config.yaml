@@ -1,0 +1,17 @@
+# YOU MUST SPECIFY KV_VIPER_FILE
+# export KV_VIPER_FILE=./example.config.yaml
+
+log:
+  level: info # log level
+  disable_sentry: true   # if we disable sentry
+
+telegram_bot:
+  token: 1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo
+#1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo
+
+
+listener:
+  addr: :8080
+
+vehicle:
+  capacity: 100
