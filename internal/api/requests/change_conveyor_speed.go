@@ -9,7 +9,7 @@ import (
 )
 
 type ChangeConveyorSpeedRequest struct {
-	Speed float64 `json:"speed"`
+	Speed int `json:"speed"`
 }
 
 func NewChangeConveyorSpeedRequest(r *http.Request) (*ChangeConveyorSpeedRequest, error) {

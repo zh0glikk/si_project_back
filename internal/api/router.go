@@ -27,14 +27,14 @@ func Router(cfg config.Config) chi.Router {
 			ctx.SetTruck(vehicle.NewTruck(cfg.Vehicle().Capacity)),
 			ctx.SetLoader(loader.NewLoader()),
 			ctx.SetTunnel(tunnel.NewTunnel()),
-			ctx.SetConveyor(conveyor.NewConveyor(10)),
+			ctx.SetConveyor(conveyor.NewConveyor(cfg.Conveyor().Speed)),
 		),
 	)
 
 	r.Route("/", func(r chi.Router) {
 		r.Route("/driver", func(r chi.Router) {
 			r.Post("/add-garbage", handlers.AddGarbage)
-			r.Post("/takeAway", handlers.TakeAway)
+			r.Post("/take-away", handlers.TakeAway)
 		})
 
 		r.Route("/loader", func(r chi.Router) {
@@ -49,7 +49,6 @@ func Router(cfg config.Config) chi.Router {
 
 			r.Post("/transform-garbage", handlers.TransformGarbage)
 
-			r.Get("/ventilation", handlers.VentilationState)
 			r.Post("/change-ventilation-state", handlers.ChangeVentilationState)
 		})
 

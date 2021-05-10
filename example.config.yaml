@@ -7,11 +7,12 @@ log:
 
 telegram_bot:
   token: 1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo
-#1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo
-
 
 listener:
   addr: :8080
 
 vehicle:
   capacity: 100
+
+conveyor:
+  speed: 10

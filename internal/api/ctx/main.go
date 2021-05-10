@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/si_project_back/internal/conveyor"
-	"github.com/si_project_back/internal/db"
 	"github.com/si_project_back/internal/loader"
 	"github.com/si_project_back/internal/tunnel"
 	"github.com/si_project_back/internal/vehicle"
@@ -106,9 +105,9 @@ func SetConveyor(conveyor *conveyor.Conveyor) func(ctx context.Context) context.
 func Conveyor(r *http.Request) *conveyor.Conveyor {
 	return r.Context().Value(keyConveyor).(*conveyor.Conveyor)
 }
-
-func GarbageQ(r *http.Request) *db.GarbageQ {
-	return db.NewGarbageQ(r.Context().Value(keyDB).(*pgdb.DB).Clone())
-}
+//
+//func GarbageQ(r *http.Request) *db.GarbageQ {
+//	return db.NewGarbageQ(r.Context().Value(keyDB).(*pgdb.DB).Clone())
+//}
 
 

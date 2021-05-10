@@ -9,6 +9,12 @@ import (
 )
 
 func LoadTruck(w http.ResponseWriter, r *http.Request) {
+	if len(ctx.Loader(r).TransformedGarbage) == 0 {
+		ctx.Log(r).Error("Nothing to load.")
+		ape.Render(w, "Nothing to load.")
+		return
+	}
+
 	garbage := ctx.Loader(r).DumpTransformedGarbage()
 
 	for _, g := range garbage {

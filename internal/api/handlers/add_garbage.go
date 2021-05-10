@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
 	"net/http"
@@ -24,11 +25,12 @@ func AddGarbage(w http.ResponseWriter, r *http.Request) {
 		GarbageType: req.GarbageType,
 	})
 
+	ctx.Log(r).Info(fmt.Sprintf("Add garbage with weight %v of type %v", req.Weight, req.GarbageType))
 	ctx.Log(r).Info("Current Fullness/Capacity: " + strconv.Itoa(ctx.GarbageTruck(r).Fullness) + "/" + strconv.Itoa(ctx.GarbageTruck(r).Capacity))
 
 	if !isOk {
 		ape.Render(w, problems.InternalError())
-		ctx.Log(r).Info("Vehicle is overweight")
+		ctx.Log(r).Error("Vehicle is overweight")
 		return
 	}
 }

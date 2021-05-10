@@ -43,8 +43,8 @@ func RunBot(cfg config.Config) {
 
 			case "sorter":
 				msg = message_handlers.NewSorterHandler(update).Handle()
-			case "sort":
-				continue
+			case "sort_conveyor":
+				msg = message_handlers.NewSort(update).Handle()
 
 			case "driver":
 				msg = message_handlers.NewDriverHandler(update).Handle()
@@ -54,21 +54,29 @@ func RunBot(cfg config.Config) {
 				msg = message_handlers.NewAddGarbage(update, garbage.Plastic).Handle()
 			case "add_garbage_organic":
 				msg = message_handlers.NewAddGarbage(update, garbage.Organic).Handle()
-
+			case "take_away":
+				msg = message_handlers.NewTakeAway(update).Handle()
 
 			case "operator":
-				continue
+				msg = message_handlers.NewOperatorHandler(update).Handle()
+			case "transform_garbage":
+				msg = message_handlers.NewTransformGarbage(update).Handle()
+			case "change_ventilation_state":
+				msg = message_handlers.NewChangeVentilationState(update).Handle()
+			case "change_conveyor_state":
+				msg = message_handlers.NewChangeConveyorState(update).Handle()
+			case "change_conveyor_speed":
+				msg = message_handlers.NewChangeConveyorSpeed(update).Handle()
 
 			case "loader":
 				msg = message_handlers.NewLoaderHandler(update).Handle()
 			case "unload_garbage_truck":
 				msg = message_handlers.NewUnloadGarbageTruck(update).Handle()
 			case "load_truck":
-				continue
+				msg = message_handlers.NewLoadTruck(update).Handle()
 			case "load_conv":
-				continue
+				msg = message_handlers.NewLoadConv(update).Handle()
 			}
-
 
 			if _, err := bot.Send(msg); err != nil {
 				logrus.Info("Can't send message")

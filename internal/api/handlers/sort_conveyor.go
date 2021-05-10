@@ -8,7 +8,15 @@ import (
 )
 
 func SortConveyor(w http.ResponseWriter, r *http.Request) {
-	ctx.Conveyor(r).Sort()
+	res := ctx.Conveyor(r).Sort()
 
-	ape.Render(w, "Conveyor sorted")
+	if !res {
+		ctx.Log(r).Error("Failed to sort conveyor. Conveyor is empty.")
+		ape.Render(w, "Failed to sort conveyor. Conveyor is empty.")
+		return
+	}
+
+	ctx.Log(r).Info("Garbage sorted")
+
+	ape.Render(w, "Garbage sorted")
 }

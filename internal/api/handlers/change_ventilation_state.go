@@ -11,7 +11,7 @@ import (
 func ChangeVentilationState(w http.ResponseWriter, r *http.Request)  {
 	ctx.Ventilation(r).IsWorking = !ctx.Ventilation(r).IsWorking
 
-	ctx.Log(r).Info(fmt.Sprintf("State changed to %v", ctx.Ventilation(r).IsWorking))
+	ctx.Log(r).Info(fmt.Sprintf("Ventilation state changed to %v", ctx.Ventilation(r).IsWorking))
 
 	ape.Render(w, "State changed")
 }

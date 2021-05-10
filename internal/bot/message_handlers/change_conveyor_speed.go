@@ -5,58 +5,58 @@ import (
 	"encoding/json"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/cast"
 	"net/url"
+	"strings"
 
 	"github.com/si_project_back/internal/api/requests"
 	"github.com/si_project_back/internal/bot/keyboards"
-	"github.com/si_project_back/internal/garbage"
 	"github.com/si_project_back/pkg/connector"
 )
 
-type AddGarbage struct {
+type ChangeConveyorSpeed struct {
 	handler *Handler
-
-	garbageType garbage.GarbageType
 }
 
-func NewAddGarbage(update tgbotapi.Update, garbageType garbage.GarbageType) *AddGarbage {
-	return &AddGarbage{
+func NewChangeConveyorSpeed(update tgbotapi.Update) *ChangeConveyorSpeed {
+	return &ChangeConveyorSpeed{
 		handler: NewHandler(update),
-		garbageType: garbageType,
 	}
 }
 
-func (h AddGarbage) Handle() tgbotapi.MessageConfig {
+func (h ChangeConveyorSpeed) Handle() tgbotapi.MessageConfig {
 	conn := connector.NewConnector(&url.URL{
 		Scheme:      "http",
 		Host:        "127.0.0.1:8080",
 		ForceQuery:  false,
 	})
 
-	garb := requests.AddGarbageRequest{
-		Weight:      10,
-		GarbageType: h.garbageType,
+	tmp := strings.Split(h.handler.update.Message.Text, " ")
+
+	req := requests.ChangeConveyorSpeedRequest{
+		Speed: cast.ToInt(tmp[1]),
 	}
 
-	postBody, _ := json.Marshal(&garb)
+	postBody, _ := json.Marshal(&req)
 
 	responseBody := bytes.NewBuffer(postBody)
 
-	_, err := conn.Post("/driver/add-garbage", responseBody)
+	_, err := conn.Post("/operator/change-conveyor-speed", responseBody)
 	if err != nil {
-		logrus.Info("err")
+		logrus.Info("bad request")
 	}
 
-	text := "Driver action panel."
+
 
 	chatId := h.handler.update.Message.Chat.ID
+	text := "Operator action panel."
 
 	return tgbotapi.MessageConfig{
 		BaseChat:              tgbotapi.BaseChat{
 			ChatID:              chatId,
 			ChannelUsername:     "",
 			ReplyToMessageID:    0,
-			ReplyMarkup:         keyboards.DriverKeyboard,
+			ReplyMarkup:         keyboards.OperatorKeyboard,
 			DisableNotification: false,
 		},
 		Text:                  text,
@@ -64,3 +64,6 @@ func (h AddGarbage) Handle() tgbotapi.MessageConfig {
 		DisableWebPagePreview: false,
 	}
 }
+
+
+

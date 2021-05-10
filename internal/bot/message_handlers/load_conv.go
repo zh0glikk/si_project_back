@@ -4,59 +4,44 @@ import (
 	"bytes"
 	"encoding/json"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"github.com/sirupsen/logrus"
 	"net/url"
 
-	"github.com/si_project_back/internal/api/requests"
 	"github.com/si_project_back/internal/bot/keyboards"
-	"github.com/si_project_back/internal/garbage"
 	"github.com/si_project_back/pkg/connector"
 )
 
-type AddGarbage struct {
+type LoadConv struct {
 	handler *Handler
-
-	garbageType garbage.GarbageType
 }
 
-func NewAddGarbage(update tgbotapi.Update, garbageType garbage.GarbageType) *AddGarbage {
-	return &AddGarbage{
+func NewLoadConv(update tgbotapi.Update) *LoadConv {
+	return &LoadConv{
 		handler: NewHandler(update),
-		garbageType: garbageType,
 	}
 }
 
-func (h AddGarbage) Handle() tgbotapi.MessageConfig {
+func (h LoadConv) Handle() tgbotapi.MessageConfig {
 	conn := connector.NewConnector(&url.URL{
 		Scheme:      "http",
 		Host:        "127.0.0.1:8080",
 		ForceQuery:  false,
 	})
 
-	garb := requests.AddGarbageRequest{
-		Weight:      10,
-		GarbageType: h.garbageType,
-	}
-
-	postBody, _ := json.Marshal(&garb)
+	postBody, _ := json.Marshal(0)
 
 	responseBody := bytes.NewBuffer(postBody)
 
-	_, err := conn.Post("/driver/add-garbage", responseBody)
-	if err != nil {
-		logrus.Info("err")
-	}
-
-	text := "Driver action panel."
+	_, _ = conn.Post("/loader/load-conv", responseBody)
 
 	chatId := h.handler.update.Message.Chat.ID
+	text := "Loader action panel."
 
 	return tgbotapi.MessageConfig{
 		BaseChat:              tgbotapi.BaseChat{
 			ChatID:              chatId,
 			ChannelUsername:     "",
 			ReplyToMessageID:    0,
-			ReplyMarkup:         keyboards.DriverKeyboard,
+			ReplyMarkup:         keyboards.LoaderKeyboard,
 			DisableNotification: false,
 		},
 		Text:                  text,

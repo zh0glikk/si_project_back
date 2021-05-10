@@ -31,7 +31,11 @@ func (v *GarbageTruck) AddGarbage(garbage garbage.Garbage) bool {
 }
 
 func (v *GarbageTruck) Dump() []garbage.Garbage {
-	tmp := v.CollectedGarbage
+	var tmp []garbage.Garbage
+
+	for _, g := range v.CollectedGarbage {
+		tmp = append(tmp, g)
+	}
 
 	v.CollectedGarbage = v.CollectedGarbage[:0]
 	v.Fullness = 0

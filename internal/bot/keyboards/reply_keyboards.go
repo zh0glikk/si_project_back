@@ -35,7 +35,7 @@ var MainKeyboard = tgbotapi.NewReplyKeyboard(
 var SorterKeyboard = tgbotapi.NewReplyKeyboard(
 	tgbotapi.NewKeyboardButtonRow(
 		tgbotapi.KeyboardButton{
-			Text:            "/sort",
+			Text:            "/sort_conveyor",
 			RequestContact:  false,
 			RequestLocation: false,
 		},
@@ -69,7 +69,7 @@ var DriverKeyboard = tgbotapi.NewReplyKeyboard(
 	),
 	tgbotapi.NewKeyboardButtonRow(
 		tgbotapi.KeyboardButton{
-			Text:            "/take-away",
+			Text:            "/take_away",
 			RequestContact:  false,
 			RequestLocation: false,
 		},
@@ -109,4 +109,48 @@ var LoaderKeyboard = tgbotapi.NewReplyKeyboard(
 		},
 	),
 )
+
+var OperatorKeyboard = tgbotapi.NewReplyKeyboard(
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.KeyboardButton{
+			Text:            "/change_conveyor_state",
+			RequestContact:  false,
+			RequestLocation: false,
+		},
+	),
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.KeyboardButton{
+			Text:            "/change_conveyor_speed 5",
+			RequestContact:  false,
+			RequestLocation: false,
+		},
+		tgbotapi.KeyboardButton{
+			Text:            "/change_conveyor_speed 10",
+			RequestContact:  false,
+			RequestLocation: false,
+		},
+	),
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.KeyboardButton{
+			Text:            "/change_ventilation_state",
+			RequestContact:  false,
+			RequestLocation: false,
+		},
+	),
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.KeyboardButton{
+			Text:            "/transform_garbage",
+			RequestContact:  false,
+			RequestLocation: false,
+		},
+	),
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.KeyboardButton{
+			Text:            "/back",
+			RequestContact:  false,
+			RequestLocation: false,
+		},
+	),
+)
+
 

@@ -20,7 +20,7 @@ func ChangeConveyorSpeed(w http.ResponseWriter, r *http.Request)  {
 
 	ctx.Conveyor(r).Speed = res.Speed
 
-	ctx.Log(r).Info(fmt.Sprintf("speed changed to %s", res.Speed))
+	ctx.Log(r).Info(fmt.Sprintf("speed changed to %v", res.Speed))
 
 	ape.Render(w, "Speed changed.")
 }

@@ -13,17 +13,10 @@ type Garbage struct {
 	GarbageType GarbageType
 }
 
-func NewGarbage(weight int, garbageType GarbageType) *Garbage {
-	return &Garbage{Weight: weight, GarbageType: garbageType}
-}
-
 type TransformedGarbage struct {
 	Weight int
 }
 
-func NewTransformedGarbage(weight int) *TransformedGarbage {
-	return &TransformedGarbage{Weight: weight}
-}
 
 
 

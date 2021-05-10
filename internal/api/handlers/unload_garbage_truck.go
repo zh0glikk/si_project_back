@@ -10,17 +10,19 @@ import (
 
 func UnloadGarbageTruck(w http.ResponseWriter, r *http.Request) {
 	if ctx.GarbageTruck(r).Fullness == 0 {
-		ctx.Log(r).Info("GarbageTruck is empty")
+		ctx.Log(r).Error("GarbageTruck is empty")
 		ape.Render(w, "GarbageTruck is empty")
 		return
 	}
 
 	res := ctx.GarbageTruck(r).Dump()
 
+	ctx.Log(r).Info(res)
+
 	ctx.Loader(r).CollectedGarbage = append(ctx.Loader(r).CollectedGarbage, res...)
 
-	ctx.Log(r).Info("Truck fullness: " + strconv.Itoa(ctx.GarbageTruck(r).Fullness))
-	ctx.Log(r).Info("Vehicle was dumped")
+	ctx.Log(r).Info("GarbageTruck fullness: " + strconv.Itoa(ctx.GarbageTruck(r).Fullness))
+	ctx.Log(r).Info("GarbageTruck was dumped")
 
-	ape.Render(w, "Vehicle was dumped")
+	ape.Render(w, "GarbageTruck was dumped")
 }
