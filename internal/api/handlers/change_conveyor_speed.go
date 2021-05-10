@@ -11,16 +11,16 @@ import (
 )
 
 func ChangeConveyorSpeed(w http.ResponseWriter, r *http.Request)  {
-	res, err := requests.NewChangeConveyorSpeedRequest(r)
+	req, err := requests.NewChangeConveyorSpeedRequest(r)
 	if err != nil {
 		ctx.Log(r).WithError(err).Error("bad request")
 		ape.Render(w, problems.BadRequest(err))
 		return
 	}
 
-	ctx.Conveyor(r).Speed = res.Speed
+	ctx.Conveyor(r).ChangeSpeed(req.Speed)
 
-	ctx.Log(r).Info(fmt.Sprintf("speed changed to %v", res.Speed))
+	ctx.Log(r).Info(fmt.Sprintf("speed changed to %v", req.Speed))
 
 	ape.Render(w, "Speed changed.")
 }

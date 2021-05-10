@@ -2,13 +2,11 @@ package ctx
 
 import (
 	"context"
-	"gitlab.com/distributed_lab/kit/pgdb"
 	"gitlab.com/distributed_lab/logan/v3"
 	"net/http"
 
 	"github.com/si_project_back/internal/conveyor"
 	"github.com/si_project_back/internal/loader"
-	"github.com/si_project_back/internal/tunnel"
 	"github.com/si_project_back/internal/vehicle"
 	"github.com/si_project_back/internal/ventilation"
 )
@@ -22,7 +20,6 @@ const (
 	keyGarbageTruck
 	keyTruck
 	keyLoader
-	keyTunnel
 	keyConveyor
 )
 
@@ -34,16 +31,6 @@ func SetLog(entry *logan.Entry) func(context.Context) context.Context {
 
 func Log(r *http.Request) *logan.Entry {
 	return r.Context().Value(keyLog).(*logan.Entry)
-}
-
-func SetDB(entry *pgdb.DB) func(context.Context) context.Context {
-	return func(ctx context.Context) context.Context {
-		return context.WithValue(ctx, keyDB, entry)
-	}
-}
-
-func DB(r *http.Request) *pgdb.DB {
-	return r.Context().Value(keyDB).(*pgdb.DB)
 }
 
 func SetVentilation(v *ventilation.Ventilation) func(ctx context.Context) context.Context {
@@ -86,16 +73,6 @@ func Loader(r *http.Request) *loader.Loader {
 	return r.Context().Value(keyLoader).(*loader.Loader)
 }
 
-func SetTunnel(v *tunnel.Tunnel) func(ctx context.Context) context.Context {
-	return func(ctx context.Context) context.Context {
-		return context.WithValue(ctx, keyTunnel, v)
-	}
-}
-
-func Tunnel(r *http.Request) *tunnel.Tunnel {
-	return r.Context().Value(keyTunnel).(*tunnel.Tunnel)
-}
-
 func SetConveyor(conveyor *conveyor.Conveyor) func(ctx context.Context) context.Context {
 	return func(ctx context.Context) context.Context {
 		return context.WithValue(ctx, keyConveyor, conveyor)
@@ -105,9 +82,4 @@ func SetConveyor(conveyor *conveyor.Conveyor) func(ctx context.Context) context.
 func Conveyor(r *http.Request) *conveyor.Conveyor {
 	return r.Context().Value(keyConveyor).(*conveyor.Conveyor)
 }
-//
-//func GarbageQ(r *http.Request) *db.GarbageQ {
-//	return db.NewGarbageQ(r.Context().Value(keyDB).(*pgdb.DB).Clone())
-//}
-
 

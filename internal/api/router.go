@@ -6,7 +6,6 @@ import (
 	"github.com/si_project_back/internal/config"
 	"github.com/si_project_back/internal/conveyor"
 	"github.com/si_project_back/internal/loader"
-	"github.com/si_project_back/internal/tunnel"
 	"github.com/si_project_back/internal/vehicle"
 	"github.com/si_project_back/internal/ventilation"
 
@@ -23,10 +22,9 @@ func Router(cfg config.Config) chi.Router {
 		ape.CtxMiddleWare(
 			ctx.SetLog(cfg.Log()),
 			ctx.SetVentilation(ventilation.New()),
+			ctx.SetLoader(loader.NewLoader()),
 			ctx.SetGarbageTruck(vehicle.NewGarbageTruck(cfg.Vehicle().Capacity)),
 			ctx.SetTruck(vehicle.NewTruck(cfg.Vehicle().Capacity)),
-			ctx.SetLoader(loader.NewLoader()),
-			ctx.SetTunnel(tunnel.NewTunnel()),
 			ctx.SetConveyor(conveyor.NewConveyor(cfg.Conveyor().Speed)),
 		),
 	)

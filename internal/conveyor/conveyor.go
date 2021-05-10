@@ -101,3 +101,10 @@ func (c *Conveyor) Transform() []garbage.TransformedGarbage {
 	return result
 }
 
+func (c *Conveyor) ChangeSpeed(speed int) {
+	c.Speed = speed
+}
+
+func (c * Conveyor) ChangeState() {
+	c.IsEnabled = !c.IsEnabled
+}

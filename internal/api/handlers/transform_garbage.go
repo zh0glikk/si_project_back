@@ -8,6 +8,12 @@ import (
 )
 
 func TransformGarbage(w http.ResponseWriter, r *http.Request) {
+	if !ctx.Ventilation(r).IsWorking {
+		ctx.Log(r).Error("Ventilation is disabled.")
+		ape.Render(w, "Ventilation is disabled.")
+		return
+	}
+
 	if !ctx.Conveyor(r).IsEnabled {
 		ctx.Log(r).Error("Conveyor is disabled.")
 		ape.Render(w, "Conveyor is disabled.")
